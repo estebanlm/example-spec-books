@@ -47,8 +47,8 @@ BkCollectionPresenter >> initializePresenters [
 BkCollectionPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter 
-		title: 'My Collections';
-		toolbar: self toolbar
+		title: 'My Collections'";
+		toolbar: self toolbar"
 ]
 
 { #category : #initialization }
