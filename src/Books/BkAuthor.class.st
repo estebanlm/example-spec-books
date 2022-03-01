@@ -30,7 +30,7 @@ BkAuthor >> fromDList: aDList [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 BkAuthor >> numberOfBooks [
 	
 	^ (series flatCollect: #books) size

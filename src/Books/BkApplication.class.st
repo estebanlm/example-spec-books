@@ -7,6 +7,12 @@ Class {
 	#category : #'Books-View'
 }
 
+{ #category : #activation }
+BkApplication class >> applicationName [
+
+	^ 'books'
+]
+
 { #category : #accessing }
 BkApplication >> activeCollection [
 	| dlist |
