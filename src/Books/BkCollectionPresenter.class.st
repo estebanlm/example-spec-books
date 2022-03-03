@@ -1,6 +1,3 @@
-"
-a comment
-"
 Class {
 	#name : #BkCollectionPresenter,
 	#superclass : #SpPresenter,
@@ -14,33 +11,34 @@ Class {
 	#category : #'Books-View'
 }
 
-{ #category : #initialization }
-BkCollectionPresenter >> connectPresenters [
-
-	tree transmitDo: [ :anItem | self updateDetail: anItem ]
-]
-
 { #category : #actions }
 BkCollectionPresenter >> doShowStatistics [
 		
-	(BkStatisticsPresenter 
+	"(BkStatisticsPresenter 
 		newApplication: self application 
 		model: self model)
-		open
+		open"
 ]
 
 { #category : #initialization }
-BkCollectionPresenter >> initializePresenters [ 
+BkCollectionPresenter >> initializePresenters [
 
 	self layout: (SpBoxLayout newLeftToRight
-		add: ((tree := self newTree) 
-			children: [ :anElement | anElement children ];
-			display: [ :anElement | anElement asString ];
-			yourself);
-		add: (detail := self newPresenter
-			layout: SpBoxLayout newTopToBottom;
-			yourself)	;
-		yourself)
+		add: (tree := self newTree);
+		add: (detail := self newPresenter);
+		yourself).
+	
+	tree 
+		display: [ :aNode | aNode name ];
+		children: [ :aNode | aNode children ].
+
+	tree transmitDo: [ :aNode |
+		| newPresenter |
+		newPresenter := aNode asMagritteSpecPresenter.
+		self layout 
+			replace: detail 
+			with: newPresenter.
+		detail := newPresenter ]
 ]
 
 { #category : #initialization }
@@ -61,22 +59,11 @@ BkCollectionPresenter >> toolbar [
 				label: 'Stats';
 				action: [ self doShowStatistics ];
 				yourself);
-			yourself  ]
-]
-
-{ #category : #initialization }
-BkCollectionPresenter >> updateDetail: anItem [
-	| newPresenter |
-	
-	newPresenter := anItem asMagritteSpecPresenter.
-	self layout
-		replace: detail  
-		with: newPresenter.
-	detail := newPresenter
+			yourself ]
 ]
 
 { #category : #initialization }
 BkCollectionPresenter >> updatePresenter [
 
-		tree roots: { self model }
+	tree roots: { self model }.
 ]

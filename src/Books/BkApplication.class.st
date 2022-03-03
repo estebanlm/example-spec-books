@@ -1,9 +1,10 @@
-"
-a comment
-"
 Class {
 	#name : #BkApplication,
-	#superclass : #SpApplication,
+	#superclass : #SgaApplication,
+	#instVars : [
+		'collection',
+		'repository'
+	],
 	#category : #'Books-View'
 }
 
@@ -14,25 +15,35 @@ BkApplication class >> applicationName [
 ]
 
 { #category : #accessing }
-BkApplication >> activeCollection [
-	| dlist |
+BkApplication >> collection [
 
-	dlist := DLittleLParser parse: ('./books.dl' asFileReference contents).
-	^ BkCollection fromDList: dlist
+	^ (self repository selectAll: BkCollection) anyOne
 ]
 
 { #category : #initialization }
 BkApplication >> initialize [
 
 	super initialize.
-	self useBackend: #Gtk
+	self useBackend: #Gtk.
 ]
 
-{ #category : #running }
+{ #category : #private }
+BkApplication >> openRepository [
+
+	^ VoEJDBRepository on: './books.edb' asFileReference
+]
+
+{ #category : #accessing }
+BkApplication >> repository [
+
+	^ repository ifNil: [ repository := self openRepository ]
+]
+
+{ #category : #accessing }
 BkApplication >> start [ 
 
 	(BkCollectionPresenter 
-		newApplication: self
-		model: self activeCollection) 
+		newApplication: self 
+		model: self collection)
 		open
 ]

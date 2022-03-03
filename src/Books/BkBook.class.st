@@ -20,12 +20,6 @@ Class {
 	#category : #'Books-Model'
 }
 
-{ #category : #testing }
-BkBook class >> isVoyageRoot [
-
-	^ true
-]
-
 { #category : #accessing }
 BkBook >> comments [
 
@@ -48,6 +42,17 @@ BkBook >> condition [
 BkBook >> condition: anObject [
 
 	condition := anObject
+]
+
+{ #category : #descriptions }
+BkBook >> descriptionFormat [
+	<magritteDescription>
+	
+	^ MAStringDescription new
+		priority: 100;
+		label: 'Format';
+		accessor: #format;
+		yourself
 ]
 
 { #category : #descriptions }
